@@ -13,10 +13,6 @@ Golang1.9.
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
 ```
 go get github.com/bwmarrin/discordgo
 go get github.com/erraa/dondiscord
