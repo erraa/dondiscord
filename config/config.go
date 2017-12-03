@@ -7,14 +7,18 @@ import (
 )
 
 var (
-	Token     string
-	BotPrefix string
-	config    *configStruct
+	Token          string
+	BotPrefix      string
+	config         *configStruct
+	RedditUsername string
+	RedditPassword string
 )
 
 type configStruct struct {
-	Token     string `json:"Token"`
-	BotPrefix string `json:"BotPrefix"`
+	Token          string `json:"Token"`
+	BotPrefix      string `json:"BotPrefix"`
+	RedditUsername string `json:"RedditUsername"`
+	RedditPassword string `json:"RedditPassword"`
 }
 
 // ReadConfig read
@@ -36,5 +40,7 @@ func ReadConfig() error {
 	}
 	Token = config.Token
 	BotPrefix = config.BotPrefix
+	RedditUsername = config.RedditUsername
+	RedditPassword = config.RedditPassword
 	return nil
 }
