@@ -39,4 +39,4 @@ Buy me a beer
 * Hat tip to anyone who's code was used
 * People who buys me beer
 
-<img source="http://www.vipbacking.com/midicovers/CR2169.jpg" width="50%" height="50%">
+<img source="http://www.vipbacking.com/midicovers/CR2169.jpg">
