@@ -12,6 +12,7 @@ var (
 	config         *configStruct
 	RedditUsername string
 	RedditPassword string
+	RedditUrl      string
 )
 
 type configStruct struct {
@@ -19,12 +20,13 @@ type configStruct struct {
 	BotPrefix      string `json:"BotPrefix"`
 	RedditUsername string `json:"RedditUsername"`
 	RedditPassword string `json:"RedditPassword"`
+	RedditUrl      string `json:"RedditUrl"`
 }
 
 // ReadConfig read
 func ReadConfig() error {
 	fmt.Println("Reading new file...")
-	file, err := ioutil.ReadFile("./config.json")
+	file, err := ioutil.ReadFile("/home/erra/go/src/github.com/erraa/dondiscord/config.json")
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -42,5 +44,6 @@ func ReadConfig() error {
 	BotPrefix = config.BotPrefix
 	RedditUsername = config.RedditUsername
 	RedditPassword = config.RedditPassword
+	RedditUrl = config.RedditUrl
 	return nil
 }
