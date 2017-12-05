@@ -1,6 +1,9 @@
 {
     "Token": "",
     "BotPrefix": "!",
-    "RedditUsername": "",
-    "RedditPassword": ""
+    "RedditUsername": "Kungerra",
+    "RedditPassword": "",
+    "RedditUrl": "https://www.reddit.com/api/v1/"
+    "RedditAuthUsername": ""
+    "RedditAuthPassword": ""
 }
