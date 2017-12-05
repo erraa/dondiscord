@@ -1,11 +1,14 @@
 package scraper
 
 import (
-	"bytes"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
+	"strings"
+
+	"github.com/erraa/dondiscord/config"
 )
 
 type RedditStruct struct {
@@ -15,15 +18,13 @@ type RedditStruct struct {
 }
 
 func (reddit RedditStruct) Authenticate() string {
-	// This needs to be urlencoded probably why it doesn't work
-	b := []byte(`{"grant_type": "password", "username": "", "password": ""}`)
-	buf := bytes.NewBuffer(b)
+	data := url.Values{}
+	data.Set("grant_type", "client_credentials")
 	client := &http.Client{}
-	fmt.Println(buf)
-	req, err := http.NewRequest("POST", "https://www.reddit.com/api/v1/access_token", buf)
+	req, err := http.NewRequest("POST", "https://www.reddit.com/api/v1/access_token", strings.NewReader(data.Encode()))
 
 	// Get this from config file
-	req.SetBasicAuth("", "")
+	req.SetBasicAuth(config.RedditAuthUsername, config.RedditAuthPassword)
 	req.Header.Add("User-Agent", "Kungerra")
 	resp, err := client.Do(req)
 	if err != nil {
