@@ -21,7 +21,10 @@ func (reddit RedditStruct) Authenticate() string {
 	data := url.Values{}
 	data.Set("grant_type", "client_credentials")
 	client := &http.Client{}
-	req, err := http.NewRequest("POST", "https://www.reddit.com/api/v1/access_token", strings.NewReader(data.Encode()))
+	req, err := http.NewRequest("POST",
+		"https://www.reddit.com/api/v1/access_token",
+		strings.NewReader(data.Encode()),
+	)
 
 	// Get this from config file
 	req.SetBasicAuth(config.RedditAuthUsername, config.RedditAuthPassword)
