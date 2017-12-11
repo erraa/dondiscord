@@ -13,14 +13,16 @@ var (
 	RedditUrl          string
 	RedditAuthUsername string
 	RedditAuthPassword string
+	MemeUrl            string
 )
 
 type configStruct struct {
 	Token              string `json:"Token"`
 	BotPrefix          string `json:"BotPrefix"`
 	RedditUrl          string `json:"RedditUrl"`
-	RedditAuthUsername string
-	RedditAuthPassword string
+	RedditAuthUsername string `json:"RedditAuthUsername`
+	RedditAuthPassword string `json:"RedditAuthPassword`
+	MemeUrl            string `json:"MemeUrl"`
 }
 
 // ReadConfig read
@@ -33,7 +35,6 @@ func ReadConfig() error {
 		return err
 	}
 
-	fmt.Println(string(file))
 	err = json.Unmarshal(file, &config)
 
 	if err != nil {
@@ -45,5 +46,6 @@ func ReadConfig() error {
 	RedditAuthUsername = config.RedditAuthUsername
 	RedditAuthPassword = config.RedditAuthPassword
 	RedditUrl = config.RedditUrl
+	MemeUrl = config.MemeUrl
 	return nil
 }

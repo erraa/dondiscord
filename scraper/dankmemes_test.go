@@ -9,6 +9,6 @@ import (
 
 func TestScraper(t *testing.T) {
 	config.ReadConfig()
-	reddit := InitReddit(config.RedditUrl)
-	fmt.Println(reddit.Authenticate())
+	reddit := InitReddit(config.RedditUrl, false)
+	fmt.Println(reddit.GetPicture())
 }

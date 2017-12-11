@@ -1,6 +1,7 @@
 package scraper
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -33,15 +34,38 @@ func (reddit RedditStruct) Authenticate() string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(resp.Request)
 	bodyText, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	resp.Body.Close()
+
+	var respData map[string]interface{}
+	err = json.Unmarshal([]byte(bodyText), &respData)
+	reddit.Token = respData["access_token"].(string)
+
+	// Returning is just made for testing stuff out
 	s := string(bodyText)
 	return s
 }
 
-func InitReddit(url string) RedditStruct {
+func (reddit RedditStruct) GetPicture() string {
+	fmt.Println(config.MemeUrl)
+	resp, err := http.Get(config.MemeUrl)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyText, err := ioutil.ReadAll(resp.Body)
+	resp.Body.Close()
+	return string(bodyText)
+}
+
+func InitReddit(url string, auth bool) RedditStruct {
 	reddit := RedditStruct{}
-	reddit.Url = "https://www.reddit.com/api/v1/"
-	reddit.AccessUrl = reddit.Url + "access_token"
+	if auth {
+		reddit.Url = "https://www.reddit.com/api/v1/"
+		reddit.AccessUrl = reddit.Url + "access_token"
+		reddit.Authenticate()
+	}
 	return reddit
 }
