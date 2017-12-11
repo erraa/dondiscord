@@ -49,14 +49,41 @@ func (reddit RedditStruct) Authenticate() string {
 	return s
 }
 
+type redditData struct {
+	Data subRedditData `json:"data"`
+}
+
+type subRedditData struct {
+	Children []subRedditChildren `json:"children"`
+}
+
+type subRedditChildren struct {
+	Data childData `json:"data"`
+}
+
+type childData struct {
+	Domain string `json:"domain"`
+}
+
 func (reddit RedditStruct) GetPicture() string {
-	fmt.Println(config.MemeUrl)
+	filename := "./redditdata.txt"
 	resp, err := http.Get(config.MemeUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
-	bodyText, err := ioutil.ReadAll(resp.Body)
+
+	var bodyText []byte
+	if resp.StatusCode == 429 {
+		bodyText = readfile(filename)
+	} else {
+		bodyText, err = ioutil.ReadAll(resp.Body)
+		tofile(filename, bodyText)
+	}
+
+	var nestedData redditData
+	err = json.Unmarshal(bodyText, &nestedData)
 	resp.Body.Close()
+	fmt.Printf("%+v", nestedData)
 	return string(bodyText)
 }
 
@@ -68,4 +95,19 @@ func InitReddit(url string, auth bool) RedditStruct {
 		reddit.Authenticate()
 	}
 	return reddit
+}
+
+func readfile(filename string) []byte {
+	b, err := ioutil.ReadFile(filename)
+	if err != nil {
+		panic(err)
+	}
+	return b
+}
+
+func tofile(filename string, data []byte) {
+	err := ioutil.WriteFile(filename, data, 0644)
+	if err != nil {
+		panic(err)
+	}
 }

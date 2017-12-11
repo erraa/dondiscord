@@ -1,7 +1,6 @@
 package scraper
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/erraa/dondiscord/config"
@@ -10,5 +9,5 @@ import (
 func TestScraper(t *testing.T) {
 	config.ReadConfig()
 	reddit := InitReddit(config.RedditUrl, false)
-	fmt.Println(reddit.GetPicture())
+	reddit.GetPicture()
 }

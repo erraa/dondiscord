@@ -1,6 +1,7 @@
 # DonDiscord
 
-Someone wanted me to provide dankmemes on discord
+Someone wanted me to provide dankmemes on discord.
+This project was just an easy way for me to learn golang. Feedback, criticism and beer is always appreciated
 
 ## Getting Started
 

@@ -1,7 +1,8 @@
 {
     "Token": "",
     "BotPrefix": "!",
-    "RedditUrl": "https://www.reddit.com/api/v1/"
-    "RedditAuthUsername": ""
-    "RedditAuthPassword": ""
+    "RedditUrl": "https://www.reddit.com/api/v1/",
+    "RedditAuthUsername": "",
+    "RedditAuthPassword": "",
+    "MemeUrl": "https://www.reddit.com/r/dankmemes.json"
 }
