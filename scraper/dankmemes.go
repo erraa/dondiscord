@@ -90,7 +90,7 @@ type sourceStruct struct {
 
 // GetPicture Returns a random URL to a picture from reddit
 func (reddit RedditStruct) GetPicture() string {
-	filename := "./redditdata.txt"
+	filename := "/home/erra/go/src/github.com/erraa/dondiscord/scraper/redditdata.txt"
 	resp, err := http.Get(config.MemeUrl)
 	if err != nil {
 		log.Fatal(err)

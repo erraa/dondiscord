@@ -7,6 +7,7 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/erraa/dondiscord/config"
+	"github.com/erraa/dondiscord/scraper"
 )
 
 var botid string
@@ -48,5 +49,10 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	fmt.Println(m.Content)
 	if m.Content == "!ping" {
 		s.ChannelMessageSend(m.ChannelID, "Ping Successfull")
+	}
+	if m.Content == "!dankmemes" {
+		reddit := scraper.InitReddit(config.RedditUrl, false)
+		url := reddit.GetPicture()
+		s.ChannelMessageSend(m.ChannelID, url)
 	}
 }
