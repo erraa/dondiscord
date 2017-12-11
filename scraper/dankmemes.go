@@ -18,6 +18,16 @@ type RedditStruct struct {
 	AccessUrl string
 }
 
+func InitReddit(url string, auth bool) RedditStruct {
+	reddit := RedditStruct{}
+	if auth {
+		reddit.Url = "https://www.reddit.com/api/v1/"
+		reddit.AccessUrl = reddit.Url + "access_token"
+		reddit.Authenticate()
+	}
+	return reddit
+}
+
 func (reddit RedditStruct) Authenticate() string {
 	data := url.Values{}
 	data.Set("grant_type", "client_credentials")
@@ -62,7 +72,19 @@ type subRedditChildren struct {
 }
 
 type childData struct {
-	Domain string `json:"domain"`
+	Preview imageData `json:"preview"`
+}
+
+type imageData struct {
+	Images []imageStruct `json:"images"`
+}
+
+type imageStruct struct {
+	Source sourceStruct `json:"source"`
+}
+
+type sourceStruct struct {
+	Url string `json:"url"`
 }
 
 func (reddit RedditStruct) GetPicture() string {
@@ -83,18 +105,13 @@ func (reddit RedditStruct) GetPicture() string {
 	var nestedData redditData
 	err = json.Unmarshal(bodyText, &nestedData)
 	resp.Body.Close()
-	fmt.Printf("%+v", nestedData)
-	return string(bodyText)
-}
-
-func InitReddit(url string, auth bool) RedditStruct {
-	reddit := RedditStruct{}
-	if auth {
-		reddit.Url = "https://www.reddit.com/api/v1/"
-		reddit.AccessUrl = reddit.Url + "access_token"
-		reddit.Authenticate()
+	fmt.Printf("%T", nestedData)
+	for _, children := range nestedData.Data.Children {
+		for _, images := range children.Data.Preview.Images {
+			fmt.Println(images.Source.Url)
+		}
 	}
-	return reddit
+	return string(bodyText)
 }
 
 func readfile(filename string) []byte {
