@@ -2,12 +2,13 @@ package scraper
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
 	"github.com/erraa/dondiscord/config"
 )
@@ -87,6 +88,7 @@ type sourceStruct struct {
 	Url string `json:"url"`
 }
 
+// GetPicture Returns a random URL to a picture from reddit
 func (reddit RedditStruct) GetPicture() string {
 	filename := "./redditdata.txt"
 	resp, err := http.Get(config.MemeUrl)
@@ -105,13 +107,16 @@ func (reddit RedditStruct) GetPicture() string {
 	var nestedData redditData
 	err = json.Unmarshal(bodyText, &nestedData)
 	resp.Body.Close()
-	fmt.Printf("%T", nestedData)
-	for _, children := range nestedData.Data.Children {
-		for _, images := range children.Data.Preview.Images {
-			fmt.Println(images.Source.Url)
-		}
-	}
-	return string(bodyText)
+	randomNumber := random(1, len(nestedData.Data.Children))
+	randomchild := nestedData.Data.Children[randomNumber]
+	randomUrl := randomchild.Data.Preview.Images[0].Source.Url
+
+	return randomUrl
+}
+
+func random(min, max int) int {
+	rand.Seed(time.Now().Unix())
+	return rand.Intn(max-min) + min
 }
 
 func readfile(filename string) []byte {
