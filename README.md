@@ -17,6 +17,9 @@ Golang1.9.
 ```
 go get github.com/bwmarrin/discordgo
 go get github.com/erraa/dondiscord
+
+cp example.config.json config.json
+vim config.json
 ```
 
 ### And coding style tests
