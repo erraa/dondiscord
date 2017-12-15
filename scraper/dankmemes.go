@@ -34,13 +34,13 @@ func (reddit RedditStruct) Authenticate() string {
 	data.Set("grant_type", "client_credentials")
 	client := &http.Client{}
 	req, err := http.NewRequest("POST",
-		"https://www.reddit.com/api/v1/access_token",
+		reddit.Url,
 		strings.NewReader(data.Encode()),
 	)
 
 	// Get this from config file
 	req.SetBasicAuth(config.RedditAuthUsername, config.RedditAuthPassword)
-	req.Header.Add("User-Agent", "Kungerra")
+	req.Header.Add("User-Agent", config.UserAgent)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)

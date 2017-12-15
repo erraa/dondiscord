@@ -14,6 +14,7 @@ var (
 	RedditAuthUsername string
 	RedditAuthPassword string
 	MemeUrl            string
+	UserAgent          string
 )
 
 type configStruct struct {
@@ -22,6 +23,7 @@ type configStruct struct {
 	RedditUrl          string `json:"RedditUrl"`
 	RedditAuthUsername string `json:"RedditAuthUsername`
 	RedditAuthPassword string `json:"RedditAuthPassword`
+	UserAgent          string `json:"User-Agent"`
 	MemeUrl            string `json:"MemeUrl"`
 }
 
@@ -47,5 +49,6 @@ func ReadConfig() error {
 	RedditAuthPassword = config.RedditAuthPassword
 	RedditUrl = config.RedditUrl
 	MemeUrl = config.MemeUrl
+	UserAgent = config.UserAgent
 	return nil
 }
