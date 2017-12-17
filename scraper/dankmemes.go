@@ -23,7 +23,7 @@ type RedditStruct struct {
 func InitReddit(url string, auth bool) RedditStruct {
 	reddit := RedditStruct{}
 	if auth {
-		reddit.Url = "https://www.reddit.com/api/v1/"
+		reddit.Url = config.RedditUrl
 		reddit.AccessUrl = reddit.Url + "access_token"
 		reddit.Authenticate()
 	}

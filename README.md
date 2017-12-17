@@ -20,6 +20,13 @@ go get github.com/erraa/dondiscord
 
 cp example.config.json config.json
 vim config.json
+go build
+```
+
+And then either just run the binary or create a servicefile /etc/systemd/system
+
+```
+dondiscord
 ```
 
 ### And coding style tests
