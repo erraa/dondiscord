@@ -121,7 +121,7 @@ func (reddit RedditStruct) GetPicture() string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if !len(nestedData.Data.Children) {
+	if len(nestedData.Data.Children) == 0 {
 		return "Something went wrong"
 	}
 	resp.Body.Close()
