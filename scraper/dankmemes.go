@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -91,12 +92,12 @@ type sourceStruct struct {
 
 // GetPicture Returns a random URL to a picture from reddit
 func (reddit RedditStruct) GetPicture() string {
-	filename, err := os.Getwd()
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	filename = filename + "/redditdata.txt"
+	filename := dir + "/redditdata.txt"
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
 		touchfile(filename)
 	}
