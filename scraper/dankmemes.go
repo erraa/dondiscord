@@ -118,6 +118,12 @@ func (reddit RedditStruct) GetPicture() string {
 
 	var nestedData redditData
 	err = json.Unmarshal(bodyText, &nestedData)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if !len(nestedData.Data.Children) {
+		return "Something went wrong"
+	}
 	resp.Body.Close()
 	randomNumber := random(1, len(nestedData.Data.Children))
 	randomchild := nestedData.Data.Children[randomNumber]
