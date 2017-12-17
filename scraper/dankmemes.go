@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 	"time"
 
@@ -90,7 +91,16 @@ type sourceStruct struct {
 
 // GetPicture Returns a random URL to a picture from reddit
 func (reddit RedditStruct) GetPicture() string {
-	filename := "/home/erra/go/src/github.com/erraa/dondiscord/scraper/redditdata.txt"
+	filename, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	filename = filename + "/redditdata.txt"
+	if _, err := os.Stat(filename); os.IsNotExist(err) {
+		touchfile(filename)
+	}
+
 	resp, err := http.Get(config.MemeUrl)
 	if err != nil {
 		log.Fatal(err)
@@ -101,6 +111,7 @@ func (reddit RedditStruct) GetPicture() string {
 		bodyText = readfile(filename)
 	} else {
 		bodyText, err = ioutil.ReadAll(resp.Body)
+		touchfile(filename)
 		tofile(filename, bodyText)
 	}
 
@@ -129,6 +140,13 @@ func readfile(filename string) []byte {
 
 func tofile(filename string, data []byte) {
 	err := ioutil.WriteFile(filename, data, 0644)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func touchfile(filename string) {
+	_, err := os.OpenFile(filename, os.O_RDONLY|os.O_CREATE, 0666)
 	if err != nil {
 		panic(err)
 	}
