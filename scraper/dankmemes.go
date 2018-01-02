@@ -2,6 +2,7 @@ package scraper
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -98,6 +99,7 @@ func (reddit RedditStruct) GetPicture() string {
 	}
 
 	filename := dir + "/redditdata.txt"
+	fmt.Println(filename)
 	if _, err := os.Stat(filename); os.IsNotExist(err) {
 		touchfile(filename)
 	}

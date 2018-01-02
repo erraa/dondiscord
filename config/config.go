@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 var (
+	Config             string
 	Token              string
 	BotPrefix          string
 	config             *configStruct
@@ -15,6 +17,7 @@ var (
 	RedditAuthPassword string
 	MemeUrl            string
 	UserAgent          string
+	LogFile            string
 )
 
 type configStruct struct {
@@ -25,12 +28,14 @@ type configStruct struct {
 	RedditAuthPassword string `json:"RedditAuthPassword`
 	UserAgent          string `json:"User-Agent"`
 	MemeUrl            string `json:"MemeUrl"`
+	LogFile            string `json:"LogFile"`
 }
 
 // ReadConfig read
 func ReadConfig() error {
 	fmt.Println("Reading new file...")
-	file, err := ioutil.ReadFile("/home/erra/go/src/github.com/erraa/dondiscord/config.json")
+	Config = os.Getenv("HOME") + "/dondiscord.json"
+	file, err := ioutil.ReadFile(Config)
 
 	if err != nil {
 		fmt.Println(err.Error())
@@ -43,6 +48,7 @@ func ReadConfig() error {
 		fmt.Println(err.Error())
 		return err
 	}
+
 	Token = config.Token
 	BotPrefix = config.BotPrefix
 	RedditAuthUsername = config.RedditAuthUsername
@@ -50,5 +56,16 @@ func ReadConfig() error {
 	RedditUrl = config.RedditUrl
 	MemeUrl = config.MemeUrl
 	UserAgent = config.UserAgent
+	LogFile = config.LogFile
+
+	if len(LogFile) < 0 {
+		LogFile = "/var/log/dondiscord.log"
+	}
+
+	_, err = os.OpenFile(LogFile, os.O_RDONLY|os.O_CREATE, 0666)
+	if err != nil {
+		panic(err)
+	}
+
 	return nil
 }

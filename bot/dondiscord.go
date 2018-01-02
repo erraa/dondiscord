@@ -3,7 +3,6 @@ package dondiscord
 import (
 	"log"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/bwmarrin/discordgo"
@@ -17,13 +16,11 @@ var goBot *discordgo.Session
 func Start() {
 	goBot, err := discordgo.New("Bot " + config.Token)
 	// Logging
-	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
-	logfilename := dir + "/dondiscord.log"
+	logfilename := config.LogFile
 	f, err := os.OpenFile(logfilename, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
-		panic("Couldn't open logfile")
+		panic("Couldn't open logfile " + logfilename)
 	}
-	defer f.Close()
 	log.SetOutput(f)
 
 	if err != nil {
