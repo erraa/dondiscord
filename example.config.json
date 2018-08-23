@@ -4,5 +4,5 @@
     "RedditUrl": "https://www.reddit.com/api/v1/",
     "RedditAuthUsername": "",
     "RedditAuthPassword": "",
-    "MemeUrl": "https://www.reddit.com/r/dankmemes.json"
+    "MemeUrl": "https://www.reddit.com/r/memes.json"
 }

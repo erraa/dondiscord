@@ -57,7 +57,7 @@ func messageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	if m.Content == "!ping" {
 		s.ChannelMessageSend(m.ChannelID, "Ping Successfull")
 	}
-	if m.Content == "!dankmemes" {
+	if m.Content == "!memes" {
 		reddit := scraper.InitReddit(config.RedditUrl, false)
 		url := reddit.GetPicture()
 		s.ChannelMessageSend(m.ChannelID, url)
